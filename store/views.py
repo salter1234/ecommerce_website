@@ -1,5 +1,11 @@
 from django.shortcuts import render
 
+# 在store/views.py文件中添加
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Product, Cart, CartItem, Order, OrderItem
+from django.contrib.auth.forms import UserCreationForm
+
 # Create your views here.
 from .models import Product
 
@@ -12,10 +18,19 @@ def product_list(request):
 def about(request):
     return render(request, "store/about.html")
 
-# 在store/views.py文件中添加
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from .models import Product, Cart, CartItem, Order, OrderItem
+def register(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+		print("Errors", form.errors)
+		if form.is_valid():
+			form.save()
+			return redirect('')
+		else:
+			return render(request, 'registration/register.html', {'form':form})
+	else:
+		form = UserCreationForm()
+		context = {'form': form}
+		return render(request, 'registration/register.html', context)
 
 @login_required #會檢測使用者是否已經登入，若已登入才會執行add_to_cart()的程式
 def add_to_cart(request, product_id):

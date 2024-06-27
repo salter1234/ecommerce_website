@@ -14,3 +14,5 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "ecommerce_website.settings") #要上傳到render，此處名稱要對應到檔案"Procfile"。#檔案"Procfile"：要上傳到render，此處名稱要對應到"wsgi.py"
 
 application = get_wsgi_application()
+
+#render上: Build Command: pip install --upgrade pip && pip install -r requirements.txt

@@ -49,25 +49,29 @@
     </style>
 </head>
 <body>
-  {% include "header.html" %}
-  <div class = 'container'>
+    {% include "header.html" %}
+    <div class = 'container'>
       <div class = "row justify-contain-center">
         <div class = "col-md-6">
-        {% block content %}
-        {% if user.is_authenticated %}
-          Hello, {{ user.username }}!
-          <a href="{% url 'logout' %}"><button>登出</button></a><br>
-        {% else %}
-          <p>您尚未登入！！</p>
-          <a href="{% url 'login' %}"><button>登入</button></a>
-          <a href="{% url 'register' %}"><button>註冊</button></a>
-        {% endif %}
-        {% endblock %}
-        
+          {% block content %}
+          <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <table>
+              <tr>
+                <td>{{ form.username.label_tag }}</td>
+                <td>{{ form.username }}</td>
+              </tr>
+              <tr>
+                <td>{{ form.password.label_tag }}</td>
+                <td>{{ form.password }}</td>
+              </tr>
+            </table>
+            <input type="submit" value="登入">
+          </form>
         </div>
       </div>
     </div>
-  
+{% endblock content %}
     <div class = 'container'>
         <div class="'row">
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
